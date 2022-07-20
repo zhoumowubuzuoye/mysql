@@ -1,3 +1,9 @@
+<!--
+ * @Author: xiewenhao
+ * @Date: 2022-07-19 14:53:32
+ * @LastEditTime: 2022-07-19 15:51:27
+ * @Description: 
+-->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,6 +24,7 @@
 
       // 页面加载完成后，自动发起请求，获取用户姓名
       $.get('/api/username', function (res) {
+        console.log(res);
         // status 为 0 表示获取用户名称成功；否则表示获取用户名称失败！
         if (res.status !== 0) {
           alert('您尚未登录，请登录后再执行此操作！')
