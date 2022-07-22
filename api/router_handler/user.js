@@ -1,11 +1,13 @@
 /*
  * @Author: xiewenhao
  * @Date: 2022-07-21 10:19:20
- * @LastEditTime: 2022-07-21 17:04:14
+ * @LastEditTime: 2022-07-22 16:19:04
  * @Description: 
  */
 const db = require('../db')
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+const config = require('../config')
 exports.regUser = (req, res) => {
     let {
         username,
@@ -40,5 +42,29 @@ exports.regUser = (req, res) => {
 }
 
 exports.login = (req, res) => {
-    res.send('login Ok')
+    const sql = 'select * from ev_users where username = ?'
+    let {
+        password,
+        username
+    } = req.body
+    db.query(sql, username, (err, result) => {
+        console.log(result);
+        if (err) return res.cc(err)
+        if (result.length !== 1) return res.cc('请输入正确的用户名')
+        const compareResult = bcrypt.compareSync(password, result[0].password)
+        if (!compareResult) return res.cc('登录失败')
+        const user = {
+            ...result[0],
+            password: '',
+            user_pic: ""
+        }
+        const tokenStr = jwt.sign(user, config.jwtSecretKey, {
+            expiresIn: config.expiresIn
+        })
+        res.send({
+            status: 0,
+            token: "Bearer " + tokenStr,
+            msg: '登陆成功'
+        })
+    })
 }
