@@ -1,7 +1,7 @@
 /*
  * @Author: xiewenhao
  * @Date: 2022-07-21 15:16:17
- * @LastEditTime: 2022-07-22 17:11:58
+ * @LastEditTime: 2022-07-25 14:51:27
  * @Description: 
  */
 // 导入定义验证规则的包
@@ -16,6 +16,7 @@ const password = joi
 const id = joi.number().integer().min(1).required()
 const nickname = joi.string().required()
 const email = joi.string().email().required()
+
 // 定义验证注册和登录表单数据的规则对象
 exports.reg_login_schema = {
   body: {
@@ -29,5 +30,12 @@ exports.reg_update_schema = {
     id,
     nickname,
     email
+  }
+}
+
+exports.update_password_schema = {
+  body: {
+    oldPwd: password,
+    newPwd: joi.not(joi.ref('oldPwd')).concat(password)
   }
 }
