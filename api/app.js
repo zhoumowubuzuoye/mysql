@@ -1,7 +1,7 @@
 /*
  * @Author: xiewenhao
  * @Date: 2022-07-21 09:57:49
- * @LastEditTime: 2022-07-22 16:47:38
+ * @LastEditTime: 2022-07-27 16:37:25
  * @Description: 
  */
 const express = require('express')
@@ -11,6 +11,8 @@ const config = require('./config')
 const joi = require('@hapi/joi')
 const router = require('./router')
 const infoRouter = require('./router/userinfo')
+const artRouter = require('./router/articles')
+const artsRouter = require('./router/arts')
 const api = express()
 
 api.use(cors())
@@ -32,7 +34,9 @@ api.use(expressJWT({
     path: [/^\/api/]
 }))
 api.use('/api', router)
-api.use('/my',infoRouter)
+api.use('/my', infoRouter)
+api.use('/my/articles', artRouter)
+api.use('/my', artsRouter)
 api.use((err, req, res, next) => {
     if (err instanceof joi.ValidationError) return res.cc(err)
     // 未知的错误

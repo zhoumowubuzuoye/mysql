@@ -1,7 +1,7 @@
 /*
  * @Author: xiewenhao
  * @Date: 2022-07-22 16:48:10
- * @LastEditTime: 2022-07-25 17:26:59
+ * @LastEditTime: 2022-07-27 13:49:11
  * @Description: 
  */
 const db = require('../db')
@@ -37,18 +37,27 @@ exports.password = (req, res) => {
     db.query(spq1, req.user.id, (err, result) => {
         if (err) return res.cc(err)
         if (result.length === 0) return res.cc('对不起该用户不存在')
-        console.log(bcrypt.compareSync(req.body.oldPwd, result[0].password));
-        // const compareResult = bcrypt.compareSync(req.body.oldPwd, result[0].password)
-        console.log(req.body.oldPwd);
         const compareResult = bcrypt.compareSync(req.body.oldPwd, result[0].password)
         if (!compareResult) return res.cc('旧密码错误')
         db.query(spl2, [bcrypt.hashSync(req.body.newPwd, 10), req.user.id], (err, result) => {
             if (err) return res.cc(err)
             if (result.affectedRows !== 1) return res.cc('密码更新失败')
             res.send({
-                mag: '密码更新成功',
+                msg: '密码更新成功',
                 status: 0
             })
+        })
+    })
+}
+
+exports.avatar = (req, res) => {
+    const sql = 'update  ev_users set user_pic=? where id =?'
+    db.query(sql, [req.body.avatar, req.user.id], (err, result) => {
+        if (err) return res.cc(err)
+        if (result.affectedRows !== 1) return res.cc('更换头像失败')
+        res.send({
+            msg: '更换头像成功',
+            code: 0
         })
     })
 }
