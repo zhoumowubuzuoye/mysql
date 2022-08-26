@@ -1,7 +1,7 @@
 /*
  * @Author: xiewenhao
  * @Date: 2022-07-21 10:19:20
- * @LastEditTime: 2022-07-22 16:19:04
+ * @LastEditTime: 2022-08-26 16:10:19
  * @Description: 
  */
 const db = require('../db')
@@ -42,6 +42,7 @@ exports.regUser = (req, res) => {
 }
 
 exports.login = (req, res) => {
+    console.log(req.body);
     const sql = 'select * from ev_users where username = ?'
     let {
         password,

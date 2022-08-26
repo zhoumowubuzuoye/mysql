@@ -1,12 +1,13 @@
 /*
  * @Author: xiewenhao
  * @Date: 2022-07-21 09:57:49
- * @LastEditTime: 2022-08-25 15:29:37
+ * @LastEditTime: 2022-08-26 16:57:08
  * @Description: 
  */
 const express = require('express')
 const cors = require('cors')
 const expressJWT = require('express-jwt')
+const bodyParser = require('body-parser')
 const config = require('./config')
 const joi = require('@hapi/joi')
 const router = require('./router')
@@ -19,7 +20,10 @@ api.use(cors())
 api.use(express.urlencoded({
     extended: false
 }))
+api.use(bodyParser.urlencoded({extended:false}))
+api.use(bodyParser.json())
 api.use((req, res, next) => {
+    console.log(req,11);
     res.cc = (err, status = 1) => {
         res.send({
             status,
