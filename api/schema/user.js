@@ -1,7 +1,7 @@
 /*
  * @Author: xiewenhao
  * @Date: 2022-07-21 15:16:17
- * @LastEditTime: 2022-07-27 13:41:57
+ * @LastEditTime: 2022-09-01 10:26:57
  * @Description: 
  */
 // 导入定义验证规则的包
@@ -36,7 +36,7 @@ exports.reg_update_schema = {
 exports.update_password_schema = {
   body: {
     oldPwd: password,
-    newPwd: joi.not(joi.ref('oldPwd')).concat(password)
+    newPwd: joi.not(joi.ref('oldPwd')).concat(password),
   }
 }
 

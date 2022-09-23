@@ -1,7 +1,7 @@
 /*
  * @Author: xiewenhao
  * @Date: 2022-07-21 09:57:49
- * @LastEditTime: 2022-08-26 16:57:08
+ * @LastEditTime: 2022-09-13 16:07:48
  * @Description: 
  */
 const express = require('express')
@@ -23,7 +23,6 @@ api.use(express.urlencoded({
 api.use(bodyParser.urlencoded({extended:false}))
 api.use(bodyParser.json())
 api.use((req, res, next) => {
-    console.log(req,11);
     res.cc = (err, status = 1) => {
         res.send({
             status,

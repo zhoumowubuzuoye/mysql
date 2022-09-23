@@ -1,17 +1,24 @@
 /*
  * @Author: xiewenhao
  * @Date: 2022-07-27 14:56:02
- * @LastEditTime: 2022-07-27 15:57:18
+ * @LastEditTime: 2022-09-20 15:33:44
  * @Description: 
  */
 const joi = require('joi')
 const name = joi.string().required()
-const alias = joi.string().alphanum().required()
+const alias = joi.string().required()
 const id = joi.number().integer().required()
+const pageSize = joi.number().integer()
+const pageNum = joi.number().integer()
+const actor = joi.optional()
+const history = joi.number().optional()
+
 exports.add_articlr_schema = {
     body: {
         name,
-        alias
+        alias,
+        actor,
+        history
     }
 }
 
@@ -32,5 +39,12 @@ exports.updte_article_schema = {
         id,
         name,
         alias
+    }
+}
+
+exports.get_article_list_schema = {
+    body: {
+        pageSize,
+        pageNum
     }
 }

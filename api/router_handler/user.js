@@ -1,7 +1,7 @@
 /*
  * @Author: xiewenhao
  * @Date: 2022-07-21 10:19:20
- * @LastEditTime: 2022-08-26 16:10:19
+ * @LastEditTime: 2022-09-13 16:07:58
  * @Description: 
  */
 const db = require('../db')
@@ -42,14 +42,12 @@ exports.regUser = (req, res) => {
 }
 
 exports.login = (req, res) => {
-    console.log(req.body);
     const sql = 'select * from ev_users where username = ?'
     let {
         password,
         username
     } = req.body
     db.query(sql, username, (err, result) => {
-        console.log(result);
         if (err) return res.cc(err)
         if (result.length !== 1) return res.cc('请输入正确的用户名')
         const compareResult = bcrypt.compareSync(password, result[0].password)
